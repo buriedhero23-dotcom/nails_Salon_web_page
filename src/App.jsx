@@ -1,15 +1,16 @@
 import "./App.css";
-import Hero from "./components/Hero"
+//import About from "./components/About";
+//import Contact from "./components/Contact";
+//import Hero from "./components/Hero";
+import Navbar from "./components/Navbar";
+//import Portfolio from "./components/Portfolio";
+//import PriceList from "./components/PriceList";
 
 function App() {
   return (
-    <div>
-      <Hero title="Nehtové studio"  
-        text="Krásné nehty pro každou příležitost"
-        buttonText="Objednat se"
-      />
-       
-    </div>
+    <>
+      <Navbar />
+    </>
   );
 }
 
