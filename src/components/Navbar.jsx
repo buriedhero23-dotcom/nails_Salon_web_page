@@ -8,10 +8,10 @@ function Navbar() {
 
   // Navigation menu items array
   const navItems = [
-    "Moje práce",
-    "Ceník a služby",
-    "O mně",
-    "Kontakty",
+    { label: "Moje práce", id: "portfolio" },
+    { label: "Ceník a služby", id: "prices" },
+    { label: "O mně", id: "about" },
+    { label: "Kontakty", id: "contacts" },
   ];
 
   // Animation variants for Framer Motion
@@ -86,8 +86,8 @@ function Navbar() {
               animate="visible"
               variants={menuVariants}
             >
-              <a href={`#${item.toLowerCase().replace(/\s+/g, "-")}`} className="nav-link">
-                {item}
+              <a href={`#${item.id}`} className="nav-link">
+                {item.label}
               </a>
             </motion.li>
           ))}
@@ -121,16 +121,16 @@ function Navbar() {
             <ul className="nav-menu mobile-menu">
               {navItems.map((item) => (
                 <motion.li
-                  key={item}
+                  key={item.id}
                   whileHover={{ x: 10 }}
                   transition={{ duration: 0.2 }}
                 >
                   <a
-                    href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                    href={`#${item.id}`}
                     className="nav-link mobile-nav-link"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    {item}
+                    {item.label}
                   </a>
                 </motion.li>
               ))}
