@@ -6,6 +6,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 90px;
 }
 
 body {
@@ -23,6 +24,7 @@ main {
 
 .section {
   padding: 4rem 0;
+  scroll-margin-top: 5.5rem;
 }
 
 .section-header {
@@ -61,8 +63,19 @@ main {
 }
 
 .hero-title {
-  font-size: clamp(2.8rem, 5vw, 4rem);
+  max-width: 900px;
+
+  font-size: clamp(2.7rem, 8vw, 4.5rem);
+  line-height: 1.05;
+
   color: #5c384d;
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 3rem;
+    line-height: 1.08;
+  }
 }
 
 .hero-text {

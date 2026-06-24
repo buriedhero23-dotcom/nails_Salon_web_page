@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import "./Navbar.css";
+import "../style/Navbar.css";
 
 function Navbar() {
-  // State hook to manage mobile menu open/close state
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Navigation menu items array
   const navItems = [
     { label: "Moje práce", id: "portfolio" },
     { label: "Ceník a služby", id: "prices" },
@@ -14,125 +12,92 @@ function Navbar() {
     { label: "Kontakty", id: "contacts" },
   ];
 
-  // Animation variants for Framer Motion
-  const menuVariants = {
-    hidden: {
-      opacity: 0,
-      y: -20,
-    },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.1,
-        duration: 0.3,
-        ease: "easeOut",
-      },
-    }),
-  };
+  const scrollToSection = (id) => {
+    const scroll = () => {
+      if (id === "hero") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
 
-  const mobileMenuVariants = {
-    hidden: {
-      opacity: 0,
-      height: 0,
-    },
-    visible: {
-      opacity: 1,
-      height: "auto",
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut",
-      },
-    },
-    exit: {
-      opacity: 0,
-      height: 0,
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut",
-      },
-    },
-  };
+      const section = document.getElementById(id);
+      if (!section) return;
 
-  const hamburgerVariants = {
-    closed: {
-      rotate: 0,
-    },
-    open: {
-      rotate: 90,
-    },
+      const navbarHeight = document.querySelector(".navbar")?.offsetHeight || 0;
+      const top =
+        section.getBoundingClientRect().top + window.scrollY - navbarHeight - 16;
+
+      window.scrollTo({
+        top,
+        behavior: "smooth",
+      });
+    };
+
+    setIsMenuOpen(false);
+
+    setTimeout(scroll, 280);
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        {/* Logo Section */}
-        <motion.div
+        <motion.button
+          type="button"
           className="navbar-logo"
+          onClick={() => scrollToSection("hero")}
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1>💅 RunaNails Studio</h1>
-        </motion.div>
+          <span className="navbar-logo-icon">💅</span>
+          <span className="navbar-logo-text">RunaNails Studio</span>
+        </motion.button>
 
-        {/* Desktop Navigation Links */}
         <ul className="nav-menu desktop-menu">
-          {navItems.map((item, index) => (
-            <motion.li
-              key={item}
-              custom={index}
-              initial="hidden"
-              animate="visible"
-              variants={menuVariants}
-            >
-              <a href={`#${item.id}`} className="nav-link">
+          {navItems.map((item) => (
+            <li key={item.id}>
+              <button
+                type="button"
+                className="nav-link"
+                onClick={() => scrollToSection(item.id)}
+              >
                 {item.label}
-              </a>
-            </motion.li>
+              </button>
+            </li>
           ))}
         </ul>
 
-        {/* Mobile Hamburger Menu Button */}
-        <motion.button
+        <button
+          type="button"
           className="hamburger-menu"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          variants={hamburgerVariants}
-          animate={isMenuOpen ? "open" : "closed"}
-          transition={{ duration: 0.3 }}
+          onClick={() => setIsMenuOpen((prev) => !prev)}
           aria-label="Toggle mobile menu"
         >
           <span className="hamburger-line"></span>
           <span className="hamburger-line"></span>
           <span className="hamburger-line"></span>
-        </motion.button>
+        </button>
       </div>
 
-      {/* Mobile Navigation Menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
             className="mobile-menu-container"
-            variants={mobileMenuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25 }}
           >
             <ul className="nav-menu mobile-menu">
               {navItems.map((item) => (
-                <motion.li
-                  key={item.id}
-                  whileHover={{ x: 10 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <a
-                    href={`#${item.id}`}
+                <li key={item.id}>
+                  <button
+                    type="button"
                     className="nav-link mobile-nav-link"
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={() => scrollToSection(item.id)}
                   >
                     {item.label}
-                  </a>
-                </motion.li>
+                  </button>
+                </li>
               ))}
             </ul>
           </motion.div>
