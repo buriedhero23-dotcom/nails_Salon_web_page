@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "../style/Navbar.css";
-
+import AnimatedLogoText from "./AnimatedLogoText";
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -48,8 +48,10 @@ function Navbar() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <span className="navbar-logo-icon">💅</span>
-          <span className="navbar-logo-text">RunaNails Studio</span>
+          <span className="navbar-logo-icon">
+            <img src="images/icons/logo-no-text.png" alt="💅" className="navbar-logo-img"/>
+          </span>
+          <AnimatedLogoText />
         </motion.button>
 
         <ul className="nav-menu desktop-menu">

@@ -199,5 +199,45 @@
 
   .navbar-logo-icon {
     font-size: 1.35rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+}
+
+.navbar-logo-img {
+  width: 60px;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .navbar-logo-img {
+    width: 72px;
+    height: auto;
+  }
+}
+.animated-logo-text {
+  font-size: clamp(20px, 4vw, 34px);
+  font-weight: 800;
+  color: #dc6fa4;
+  white-space: nowrap;
+  letter-spacing: -0.5px;
+}
+
+.typing-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 0.8s infinite;
+  color: #dc6fa4;
+}
+
+@keyframes blink {
+  0%, 45% {
+    opacity: 1;
+  }
+
+  46%, 100% {
+    opacity: 0;
   }
 }
