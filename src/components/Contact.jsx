@@ -9,8 +9,8 @@ function Contact() {
         <h3>Stačí napsat nebo zavolat</h3>
         <p>Rezervujte si svůj čas v RunaNails Studio a zažijte prvotřídní nehtovou péči.</p>
         <div className="contact-details">
-          <div className="contact-tag">Telefon: +420 123 456 789</div>
-          <div className="contact-tag">Email: info@runanails.cz</div>
+          <div className="contact-tag">Telefon: +420 723 439 293</div>
+          <div className="contact-tag">Instagram: runa.nailstudio</div>
           <div className="contact-tag">Adresa: Krásné náměstí 5, Praha</div>
         </div>
       </div>
