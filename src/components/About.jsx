@@ -1,3 +1,5 @@
+import salonPhoto from "../../images/salon.jpg";
+
 function About() {
   return (
     <section id="about" className="section about-section">
@@ -18,8 +20,12 @@ function About() {
             Design je vytvořen tak, aby byl nadčasový, elegantní a přesně podle vašeho přání.
           </p>
         </div>
-        <div className="about-photo-placeholder">
-          Placeholder pro foto salónu
+        <div className="about-photo">
+          <img
+            src={salonPhoto}
+            alt="RunaNails Studio salon interior"
+            className="about-photo-img"
+          />
         </div>
       </div>
     </section>
