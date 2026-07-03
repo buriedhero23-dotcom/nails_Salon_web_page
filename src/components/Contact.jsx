@@ -32,11 +32,15 @@ function Contact() {
             <img src={whatsappIcon} alt="WhatsApp" className="contact-icon" />
             <span>WhatsApp</span>
           </a>
-
-          <div className="contact-tag">
+          <a
+            href="https://maps.app.goo.gl/Ym7cxpni8nniRJJKA"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact-tag"
+          >
             <img src={locationIcon} alt="Location" className="contact-icon" />
-            <span>Krásné náměstí 5, Praha</span>
-          </div>
+            <span>26.dubna 591/12, Cheb</span>
+          </a>
         </div>
       </div>
     </section>
