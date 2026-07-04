@@ -144,3 +144,9 @@
     height: 2.5rem;
   }
 }
+
+@media (max-width: 768px) {
+  .portfolio-nav-button {
+    display: none;
+  }
+}

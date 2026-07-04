@@ -85,12 +85,35 @@ function Portfolio() {
               <motion.div
                 key={activeItem.title}
                 className="portfolio-slide"
-                initial={{ opacity: 0, x: 36 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -36 }}
-                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.15}
+
+                onDragEnd={(event, info) => {
+                  if (info.velocity.x > 400 || info.offset.x > 80) {
+                    goToPrevious();
+                  }
+
+                  if (info.offset.x < -80) {
+                    goToNext();
+                  }
+                  
+                }}
+
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.02 }}
+                transition={{
+                  duration: 0.7,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
               >
-                <img src={activeItem.image} alt={activeItem.title} className="portfolio-carousel-image" />
+                <img
+                  src={activeItem.image}
+                  alt={activeItem.title}
+                  className="portfolio-carousel-image"
+                />
               </motion.div>
             </AnimatePresence>
           </div>
