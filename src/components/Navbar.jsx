@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "../style/Navbar.css";
 import AnimatedLogoText from "./AnimatedLogoText";
+import logoIcon from "../../images/icons/logo-no-text.png"
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -49,7 +50,11 @@ function Navbar() {
           transition={{ duration: 0.5 }}
         >
           <span className="navbar-logo-icon">
-            <img src="images/icons/logo-no-text.png" alt="💅" className="navbar-logo-img"/>
+            <img
+              src={logoIcon}
+              alt="RunaNails Studio logo"
+              className="navbar-logo-img"
+            />
           </span>
           <AnimatedLogoText />
         </motion.button>
