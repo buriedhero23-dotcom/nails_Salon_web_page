@@ -2,44 +2,62 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import "../style/Portfolio.css";
 
-const portfolioItems = [
+const imageModules = import.meta.glob(
+  "../../images/portfolio/*.{jpg,jpeg,png,webp,avif}",
   {
-    title: "Růžové ombré",
-    description: "Luxusní jemný přechod na delší tvary nehtů s lesklým povrchem.",
-    image: new URL("../../images/portfolio/photo_1_2026-06-22_09-39-18.jpg", import.meta.url).href,
-  },
-  {
-    title: "Krémová elegance",
-    description: "Čistý minimalistický vzhled s jemnými detaily a nadčasovým šik stylem.",
-    image: new URL("../../images/portfolio/photo_2_2026-06-22_09-39-18.jpg", import.meta.url).href,
-  },
-  {
+    eager: true,
+    import: "default",
+  }
+);
+console.log(imageModules);
+
+const portfolioData = {
+  "photo_3_2026-06-22_09-39-18": {
     title: "Soft glam design",
-    description: "Elegantní zdobení s perleťovým leskem a sofistikovanými odstíny růžové.",
-    image: new URL("../../images/portfolio/photo_3_2026-06-22_09-39-18.jpg", import.meta.url).href,
+    description:
+      "Elegantní zdobení s perleťovým leskem a sofistikovanými odstíny růžové.",
   },
-  {
+  "photo_4_2026-06-22_09-39-18": {
     title: "Minimalistický glow",
     description: "Přirozená elegance s jemným leskem a precizní geometrií.",
-    image: new URL("../../images/portfolio/photo_4_2026-06-22_09-39-18.jpg", import.meta.url).href,
   },
-  {
+  "photo_5_2026-06-22_09-39-18": {
     title: "Rose quartz",
     description: "Měkký růžový tón s jemným shimmer efektem pro večerní vzhled.",
-    image: new URL("../../images/portfolio/photo_5_2026-06-22_09-39-18.jpg", import.meta.url).href,
   },
-  {
+  "photo_6_2026-06-22_09-39-18": {
     title: "Velvet nude",
     description: "Nadčasová nude paleta s luxusní strukturou a hladkým povrchem.",
-    image: new URL("../../images/portfolio/photo_6_2026-06-22_09-39-18.jpg", import.meta.url).href,
   },
-];
+  "photo_11_2026-06-22_09-39-18": {
+    title: "Pink Luxury",
+    description: "Elegantní růžový design s jemným leskem.",
+  },
+  "photo_12_2026-06-22_09-39-18": {
+    title: "Luxury Finish",
+    description: "Precizně zpracovaný design s moderním vzhledem.",
+  },
+};
+
+const portfolioItems = Object.entries(imageModules)
+  .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+  .map(([path, image]) => {
+    const fileName = path.split("/").pop().replace(/\.[^.]+$/, "");
+
+    return {
+      title: portfolioData[fileName]?.title ?? "Portfolio",
+      description: portfolioData[fileName]?.description ?? "Elegantní nehtový design.",
+      image,
+    };
+  });
 
 function Portfolio() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [autoplayKey, setAutoplayKey] = useState(0);
 
   useEffect(() => {
+    if (portfolioItems.length === 0) return;
+
     const timerId = window.setInterval(() => {
       setActiveIndex((currentIndex) => (currentIndex + 1) % portfolioItems.length);
     }, 3800);
@@ -59,6 +77,10 @@ function Portfolio() {
   const goToNext = () => {
     goToSlide((activeIndex + 1) % portfolioItems.length);
   };
+
+  if (portfolioItems.length === 0) {
+    return null;
+  }
 
   const activeItem = portfolioItems[activeIndex];
 
@@ -85,22 +107,18 @@ function Portfolio() {
               <motion.div
                 key={activeItem.title}
                 className="portfolio-slide"
-
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.15}
-
                 onDragEnd={(event, info) => {
                   if (info.velocity.x > 400 || info.offset.x > 80) {
                     goToPrevious();
                   }
 
-                  if (info.offset.x < -80) {
+                  if (info.velocity.x < -400 || info.offset.x < -80) {
                     goToNext();
                   }
-                  
                 }}
-
                 initial={{ opacity: 0, scale: 1.05 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 1.02 }}
@@ -130,7 +148,9 @@ function Portfolio() {
 
         <div className="portfolio-caption">
           <div className="portfolio-caption-top">
-            <p className="portfolio-counter">0{activeIndex + 1} / 0{portfolioItems.length}</p>
+            <p className="portfolio-counter">
+              0{activeIndex + 1} / 0{portfolioItems.length}
+            </p>
             <h3 className="portfolio-card-title">{activeItem.title}</h3>
           </div>
 
